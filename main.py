@@ -3,14 +3,17 @@ from time import sleep
 import os
 
 npc_list = []
+PLAYER_ALIVE = True
+PLAYER_NAME = input("Tell me thy name, brave one: ")
 
 player = {
-    "name": "Vulthar",
+    "name": PLAYER_NAME,
     "level": 1,
     "exp": 0,
     "exp_max": 30,
     "hp": 100,
     "hp_max": 100,
+    "min_dmg": 10,
     "damage": 25
 }
 
@@ -20,9 +23,9 @@ def create_npc(level):
         "name": f"Monster #{level:02}",
         "level": f"{level:02}",
         "damage": 5 * level,
-        "hp": 100 * level,
-        "hp_max": 100 * level,
-        "exp": 7 * level,
+        "hp": 50 * level,
+        "hp_max": 50 * level,
+        "exp": 8 * level,
     }
     return new_npc
 
@@ -31,7 +34,7 @@ def generate_npc(n_npcs):
     for x in range(n_npcs):
         npc = create_npc(x + 1)
         npc_list.append(npc)
-
+ 
 
 def show_npcs():
     for npc in npc_list:
@@ -89,8 +92,9 @@ def level_up():
         player["level"] += 1
         player["exp"] = 0
         player["exp_max"] *= 2
-        player["hp_max"] += 20
-        player["damage"] += 10
+        player["hp_max"] += 15
+        player["damage"] += 8
+        player["min_dmg"] += 5
         print(f"{player['name']} now is level {player['level']}")
 
 
@@ -99,13 +103,13 @@ def reset_npc(npc):
 
 
 def start_fight(npc):
+    
     clear_terminal()
     show_fight_status(npc)
-    sleep(2)
-    round = 0
+    n_round = 0
     while player["hp"] > 0 and npc["hp"] > 0:
-        round += 1
-        print(f"Round #{round}")
+        n_round += 1
+        print(f"Round #{n_round}")
         attack_npc(npc)
         attack_player(npc)
         show_fight_status(npc)
@@ -119,13 +123,14 @@ def start_fight(npc):
         reset_npc(npc)
 
     else:
-        print(f"You died!")
-        show_npc(npc)
+        print(f"{npc["name"]} crushed you! 💀💀💀 !")
+        global PLAYER_ALIVE
+        PLAYER_ALIVE = False
 
 
 def attack_npc(npc):
-    player_damage = randint(1, player["damage"])
-    critical = randint(1, 10)
+    player_damage = randint(player["min_dmg"], player["damage"])
+    critical = randint(1, 6)
     if critical == 3:
         print("CRITICAL HIT!!! Double damage!")
         player_critical = player["damage"] * 2
@@ -155,12 +160,27 @@ def show_fight_status(npc):
     print(f"")
     sleep(2)
     print(f"-" * 30)
+
     clear_terminal()
 
 def clear_terminal():
     os.system("cls" if os.name == "nt" else "clear")
 
+def start_game():
 
-generate_npc(5)
-npc_selected = npc_list[0]
-start_fight(npc_selected)
+    games_played = 0
+    while PLAYER_ALIVE:
+        next_npc = create_npc(randint(1, player["level"] + 3))
+        start_fight(next_npc)
+        games_played += 1
+
+    if games_played <= 2:
+        print(f"You played {games_played} times before you died. 🎇")
+    elif games_played <= 5:
+        print(f"Well done! {games_played} games completed. Your legend lives on! ⚔️")
+    elif games_played <= 10:
+        print(f"Congratulations! You've left a legacy of {games_played} games played! 🏆")
+    else:
+        print(f"Behold, the legend master! After {games_played} games, your saga is unparalleled! 🌟")
+
+start_game()
