@@ -1,4 +1,6 @@
 from random import randint
+from time import sleep
+import os
 
 npc_list = []
 
@@ -34,27 +36,47 @@ def generate_npc(n_npcs):
 def show_npcs():
     for npc in npc_list:
         show_npc(npc)
-        
+
 
 def show_npc(npc):
     print(
-        f"Name: {npc['name']} // "
-        f"level: {npc['level']} // "
-        f"Damage: {npc['damage']} // "
-        f"hp: {npc['hp']} // "
-        f"exp: {npc['exp']}"
-        )
+        f"Name:     {npc['name']}\n "
+        f"level:    {npc['level']}\n "
+        f"Damage:   {npc['damage']}\n "
+        f"hp:       {npc['hp']}\n "
+        f"exp:      {npc['exp']}\n"
+    )
 
 
 def show_player():
     print(
-        f"Name: {player['name']} // "
-        f"level: {player['level']} // "
-        f"Damage: {player['damage']} // "
-        f"hp: {player['hp']} / {player['hp_max']} // " 
-        f"exp: {player['exp']} / {player['exp_max']}"
-        )    
+        f"\n Name:     {player['name']}\n "
+        f"level:    {player['level']}\n "
+        f"Damage:   {player['damage']}\n "
+        f"hp:       {player['hp']} / {player['hp_max']}\n "
+        f"exp:      {player['exp']} / {player['exp_max']}\n"
+    )
 
+
+def display_npc_hp_bar(current_hp, max_hp, bar_length=10):
+    ratio = current_hp / max_hp
+
+    white_squares = int(ratio * bar_length)
+    black_squares = bar_length - white_squares
+
+    npc_hp_bar = "⬜" * white_squares + "⬛" * black_squares
+
+    return npc_hp_bar
+
+def display_player_hp_bar(current_hp, max_hp, bar_length=10):
+    ratio = current_hp / max_hp
+
+    white_squares = int(ratio * bar_length)
+    black_squares = bar_length - white_squares
+
+    player_hp_bar = "⬜" * white_squares + "⬛" * black_squares
+
+    return player_hp_bar
 
 def reset_player():
     player["hp"] = player["hp_max"]
@@ -75,8 +97,15 @@ def level_up():
 def reset_npc(npc):
     npc["hp"] = npc["hp_max"]
 
+
 def start_fight(npc):
+    clear_terminal()
+    show_fight_status(npc)
+    sleep(2)
+    round = 0
     while player["hp"] > 0 and npc["hp"] > 0:
+        round += 1
+        print(f"Round #{round}")
         attack_npc(npc)
         attack_player(npc)
         show_fight_status(npc)
@@ -88,32 +117,50 @@ def start_fight(npc):
         show_player()
         reset_player()
         reset_npc(npc)
-      
+
     else:
         print(f"You died!")
         show_npc(npc)
 
+
 def attack_npc(npc):
-    npc["hp"] -= player["damage"]
+    player_damage = randint(1, player["damage"])
+    critical = randint(1, 10)
+    if critical == 3:
+        print("CRITICAL HIT!!! Double damage!")
+        player_critical = player["damage"] * 2
+        npc["hp"] -= player_critical
+        print(f"{player["name"]} attack {player_critical}")
+    else:
+        npc["hp"] -= player_damage
+        print(f"{player["name"]} attack {player_damage}")
+
 
 def attack_player(npc):
-    player["hp"] -= npc["damage"]
+    npc_damage = randint(1, npc["damage"])
+    player["hp"] -= npc_damage
+    print(f"{npc["name"]} attack {npc_damage}")
 
 
 def show_fight_status(npc):
-    print(f"Player HP: {player["hp"]} / {player["hp_max"]}")
-    print(f"NPC: {npc["name"]} - {npc["hp"]} / {npc["hp_max"]}")
+    
+    npc_hp_bar = display_npc_hp_bar(npc["hp"], npc["hp_max"])
+    player_hp_bar = display_player_hp_bar(player["hp"], player["hp_max"])
+
+    print(f"{player["name"]} {player_hp_bar}  Vs  {npc_hp_bar} {npc["name"]}")
+
+    print(f"{player["hp"]:>16} / {player["hp_max"]} "
+    f"{npc["hp"]:>19} / {npc["hp_max"]}")
+    
+    print(f"")
+    sleep(2)
     print(f"-" * 30)
+    clear_terminal()
+
+def clear_terminal():
+    os.system("cls" if os.name == "nt" else "clear")
 
 
 generate_npc(5)
-
-# for n in range(3):
-
 npc_selected = npc_list[0]
-start_fight(npc_selected)
-start_fight(npc_selected)
-start_fight(npc_selected)
-start_fight(npc_selected)
-start_fight(npc_selected)
 start_fight(npc_selected)
