@@ -68,9 +68,11 @@ Battles are turn-based, with the player and NPC taking turns to attack. Key feat
 
 ## How to Run
 
-Simply run the `adventure_rpg_game.py` script:
-```sh
-  python adventure_rpg_game.py
+
+3. Simply run the `adventure_rpg_game.py` script::: 
+   ```sh
+   python adventure_rpg_game.py
+   
 
 # Follow the prompts to enter your name and start the adventure. Engage in battles, level up, and see how many battles you can survive!
 
