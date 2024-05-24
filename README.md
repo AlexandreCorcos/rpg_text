@@ -1,6 +1,6 @@
 # Adventure RPG Game
 
-Welcome to the Adventure RPG Game! This is a simple text-based RPG where you take on the role of a brave adventurer fighting against various monsters. Your goal is to survive as many battles as possible, leveling up and growing stronger with each victory.
+Welcome to the Adventure RPG Game! This is a simple text-based RPG where you take on the role of a brave adventurer fighting against various monsters. Your goal is to survive as many battles as possible, levelling up and growing stronger with each victory.
 
 ## Table of Contents
 - [Features](#features)
@@ -72,9 +72,8 @@ Battles are turn-based, with the player and NPC taking turns to attack. Key feat
 3. Simply run the `adventure_rpg_game.py` script::: 
    ```sh
    python adventure_rpg_game.py
-   
 
-## Follow the prompts to enter your name and start the adventure. Engage in battles, level up, and see how many battles you can survive!
+Follow the prompts to enter your name and start the adventure. Engage in battles, level up, and see how many battles you can survive!
 
 
 ## Future Improvements
@@ -87,10 +86,6 @@ Battles are turn-based, with the player and NPC taking turns to attack. Key feat
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## Acknowledgements
 
