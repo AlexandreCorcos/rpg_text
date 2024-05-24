@@ -74,7 +74,7 @@ Battles are turn-based, with the player and NPC taking turns to attack. Key feat
    python adventure_rpg_game.py
    
 
-# Follow the prompts to enter your name and start the adventure. Engage in battles, level up, and see how many battles you can survive!
+## Follow the prompts to enter your name and start the adventure. Engage in battles, level up, and see how many battles you can survive!
 
 
 ## Future Improvements
@@ -94,6 +94,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## Acknowledgements
 
-This project was inspired by the video [Criando um Jogo de RPG com Python](https://www.youtube.com/watch?v=CS_Th38ADug) on the YouTube channel "Programador Python". Special thanks to the creator for the tutorial and inspiration.
+This project was inspired by the video [Criando um Jogo de RPG com Python](https://www.youtube.com/watch?v=CS_Th38ADug) on the YouTube channel "Programador Python". Special thanks to Guilherme for the tutorial and inspiration.
 
 Happy adventuring! 🗡️🛡️✨
